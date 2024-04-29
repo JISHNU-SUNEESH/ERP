@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Order Management</title>
+    <style>
+        /* Add your CSS styles here */
+        /* Example styles */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"], .action-button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover, .action-button:hover {
+            background-color: #45a049;
+        }
+        .action-button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Create Purchase Order</h2>
+    <form id="createForm">
+        <label for="po_number">PO Number:</label>
+        <input type="text" id="po_number" name="po_number" required><br>
+        <label for="date_issued">Date Issued:</label>
+        <input type="date" id="date_issued" name="date_issued" required><br>
+        <label for="vendor_name">Vendor Name:</label>
+        <input type="text" id="vendor_name" name="vendor_name" required><br>
+        <label for="vendor_contact">Vendor Contact:</label>
+        <input type="text" id="vendor_contact" name="vendor_contact" required><br>
+        <label for="item_description">Item Description:</label>
+        <input type="text" id="item_description" name="item_description" required><br>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required><br>
+        <label for="unit_price">Unit Price:</label>
+        <input type="number" id="unit_price" name="unit_price" required><br>
+
+        <div class="action-button-container">
+            <button class="action-button" onclick="createPurchaseOrder()">Create</button>
+            <button class="action-button" onclick="updatePurchaseOrder()">Update</button>
+            <button class="action-button" onclick="deletePurchaseOrder()">Delete</button>
+        </div>
+    </form>
+
+    <script>
+        function createPurchaseOrder() {
+            const formData = new FormData(document.getElementById('createForm'));
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            };
+            fetch('http://localhost:5000/pocreate', requestOptions)
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function updatePurchaseOrder() {
+            const formData = new FormData(document.getElementById('createForm'));
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            };
+            fetch('http://localhost:5000/poupdate', requestOptions)
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function deletePurchaseOrder() {
+            const formData = new FormData(document.getElementById('createForm'));
+            const requestOptions = {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            };
+            fetch('http://localhost:5000/podelete', requestOptions)
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
