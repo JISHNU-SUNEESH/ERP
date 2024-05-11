@@ -1,6 +1,9 @@
+Fetching data from UI
+data collected successfully: {'po_number': 'PO345', 'date_issued': '2024-05-10', 'vendor_name': 'XYZ', 'vendor_contact': '9786757464', 'item_description': 'chemical', 'quantity': '5', 'unit_price': '56.6'}
+inserting data into table
+Query:INSERT INTO BI_ERP.PurchaseOrders (PO_Number, DateIssued, VendorName, VendorContact, ItemDescription, Quantity, UnitPrice, TotalPrice)         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+data loaded to purchaseorder
+closing the connection after commiting
 fetching po for deletion
-deleting PO
-Po deleted
-fetching po for deletion
-deleting PO
+deleting POPO123
 Po deleted

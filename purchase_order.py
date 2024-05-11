@@ -1,5 +1,6 @@
 
 from flask import Flask,request,jsonify
+from flask_cors import CORS
 import logging
 import os
 from connection import cursor
@@ -16,7 +17,7 @@ logger_po.addHandler(po_handler)
 
 
 app=Flask(__name__)
-
+CORS(app)
 @app.route('/pocreate',methods=['post'])
 def po_creation():
     try:
@@ -28,8 +29,8 @@ def po_creation():
         vendor_name = data.get('vendor_name')
         vendor_contact = data.get('vendor_contact')
         item_description = data.get('item_description')
-        quantity = data.get('quantity')
-        unit_price = data.get('unit_price')
+        quantity = int(data.get('quantity'))
+        unit_price = float(data.get('unit_price'))
         total_price = quantity * unit_price
 
         logger_po.info(f"data collected successfully: {data}")
@@ -71,8 +72,8 @@ def po_update():
         vendor_name = data.get('vendor_name')
         vendor_contact = data.get('vendor_contact')
         item_description = data.get('item_description')
-        quantity = data.get('quantity')
-        unit_price = data.get('unit_price')
+        quantity =int(data.get('quantity'))
+        unit_price = float(data.get('unit_price'))
         total_price = quantity * unit_price
         
         logger_po.info(f"data collected successfully: {data}")
@@ -109,7 +110,7 @@ def delete_po():
         po_number=data.get('po_number')
         
         sql="delete from BI_ERP.PurchaseOrders where po_number in (%s);"
-        logger_po.info("deleting PO")
+        logger_po.info(f"deleting PO{po_number}")
         
         cursor.execute(sql,params=(po_number,))
         logger_po.info("Po deleted")
